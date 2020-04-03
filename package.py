@@ -13,24 +13,28 @@ scriptsDir = 'scripts'
 packageDir = 'packages'
 manifestFilepath = 'module.json'
 manifest = {}
+debugPackageUrl = 'https://github.com/temportalflux/MusicAssist/blob/master/{filePath}?raw=true'
 
 globbedFiles = glob.glob('{}/*.js'.format(scriptsDir), recursive=True)
 scriptFiles = [x.replace('\\', '/') for x in globbedFiles]
 
+packageFilePath = '{dir}/{name}_{version}{debugVer}.zip'
+
 with open(manifestFilepath, 'r+') as f:
 	manifest = json.load(f)
 	manifest['scripts'] = scriptFiles
+	packageFilePath = packageFilePath.format(
+		dir = packageDir,
+		name = manifest['name'],
+		version = manifest['version'],
+		debugVer = 'b{}'.format(debugVersion) if isDebug else ''
+	)
+	manifest['download'] = debugPackageUrl.format(filePath = packageFilePath)
 	f.seek(0)
 	json.dump(manifest, f, indent=2)
 	f.truncate()
 
-zipf = zipfile.ZipFile(
-	'{}/{}_{}{}.zip'.format(
-		packageDir, manifest['name'], manifest['version'],
-		'b{}'.format(debugVersion) if isDebug else ''
-	),
-	'w', zipfile.ZIP_DEFLATED
-)
+zipf = zipfile.ZipFile(packageFilePath, 'w', zipfile.ZIP_DEFLATED)
 zippedFiles = []
 def zipdir(dirPath, indent):
 	for subPath in os.listdir(dirPath):
@@ -48,4 +52,8 @@ for subPath in manifest['packageItems']:
 		zippedFiles.append(fullPath)
 		zipf.write(fullPath)
 zipf.close()
+
 print(zippedFiles)
+
+
+

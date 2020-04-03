@@ -11,7 +11,7 @@
   ],
   "url": "https://github.com/temportalflux/MusicAssist",
   "manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
-  "download": "",
+  "download": "https://github.com/temportalflux/MusicAssist/blob/master/packages/music-assist_0.0.1b1.zip?raw=true",
   "socket": true,
   "packageItems": [
     "scripts",
