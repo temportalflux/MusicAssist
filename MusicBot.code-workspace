@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.insertSpaces": false,
+		"editor.tabSize": 2,
+		"javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+		"javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+		"typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+		"typescript.format.placeOpenBraceOnNewLineForFunctions": true
+	}
+}
