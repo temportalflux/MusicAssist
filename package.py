@@ -3,33 +3,38 @@ import json
 import os
 import zipfile
 import sys
+import shutil
+from distutils.dir_util import copy_tree
 
-print('Args: {}'.format(sys.argv))
-isDebug = len(sys.argv) >= 2 and sys.argv[1] == 'debug'
-debugVersion = sys.argv[2] if isDebug and len(sys.argv) >= 3 else ''
-
-scriptsDir = 'scripts'
 # TODO: Move this to a github release submission for non-development builds
-packageDir = 'packages'
+packageDir = 'builds'
 manifestFilepath = 'module.json'
 manifest = {}
 debugPackageUrl = 'https://github.com/temportalflux/MusicAssist/blob/master/{filePath}?raw=true'
 
-globbedFiles = glob.glob('{}/*.js'.format(scriptsDir), recursive=True)
-scriptFiles = [x.replace('\\', '/') for x in globbedFiles]
+def collectFiles(rootDir, ext):
+	return ['{}'.format(x.replace('\\', '/')) for x in glob.glob('{}/**/*.{}'.format(rootDir, ext), recursive=True)]
+projectFiles = {
+	'icons': '*',
+	'styles': 'css',
+	'templates': 'html',
+}
+for fileType in projectFiles:
+	projectFiles[fileType] = collectFiles('./{}'.format(fileType), projectFiles[fileType])
+	print('{}: {}'.format(fileType, projectFiles[fileType]))
 
-packageFilePath = '{dir}/{name}_{version}{debugVer}.zip'
+packageFilePath = '{dir}/{name}_{version}.zip'
 
 with open(manifestFilepath, 'r+') as f:
 	manifest = json.load(f)
-	manifest['scripts'] = scriptFiles
+	for fileType in projectFiles:
+		manifest[fileType] = projectFiles[fileType]
 	packageFilePath = packageFilePath.format(
 		dir = packageDir,
 		name = manifest['name'],
 		version = manifest['version'],
-		debugVer = 'b{}'.format(debugVersion) if isDebug else ''
 	)
-	manifest['download'] = debugPackageUrl.format(filePath = packageFilePath)
+	#manifest['download'] = debugPackageUrl.format(filePath = packageFilePath)
 	f.seek(0)
 	json.dump(manifest, f, indent=2)
 	f.truncate()
@@ -55,5 +60,15 @@ zipf.close()
 
 print(zippedFiles)
 
-
+if 'debugBuildDirectory' in manifest and 'packageItems' in manifest:
+	copyBuildFilesTo = os.path.join(manifest['debugBuildDirectory'], manifest['name'])
+	shutil.rmtree(copyBuildFilesTo)
+	for item in manifest['packageItems']:
+		fullPath = os.path.join('', item)
+		destPath = os.path.join(copyBuildFilesTo, item)
+		print('Copying {} to {}'.format(fullPath, destPath))
+		if os.path.isdir(fullPath):
+			copy_tree(fullPath, destPath)
+		else:
+			shutil.copyfile(fullPath, destPath)
 

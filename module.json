@@ -5,17 +5,33 @@
   "author": "temportalflux",
   "version": "0.0.1",
   "minimumCoreVersion": "0.5.3",
-  "scripts": [
-    "scripts/hooks.js",
-    "scripts/main.js"
+  "esmodules": [
+    "./modules/main.js"
+  ],
+  "styles": [
+    "./styles/music-assist.css"
+  ],
+  "templates": [
+    "./templates/importTrackForm.html"
   ],
   "url": "https://github.com/temportalflux/MusicAssist",
   "manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
-  "download": "https://github.com/temportalflux/MusicAssist/blob/master/packages/music-assist_0.0.1b1.zip?raw=true",
+  "download": "",
   "socket": true,
+  "debugBuildDirectory": "C:\\Users\\Dustin Yost\\AppData\\Local\\FoundryVTT\\Data\\modules\\",
   "packageItems": [
-    "scripts",
+    "icons",
+    "lang",
+    "modules",
+    "packs",
+    "styles",
+    "templates",
     "module.json",
     "README.md"
-  ]
+  ],
+  "icons": [
+    "./icons/music-spell.png",
+    "./icons/music-spell.svg"
+  ],
+  "scripts": []
 }
