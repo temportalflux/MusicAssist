@@ -1,26 +1,36 @@
 import * as MusicStreaming from './config.js';
 
-class ImportTrackForm extends FormApplication
+export class ImportTrackForm extends FormApplication
 {
+
+	constructor(playlist, sound, options)
+	{
+		super(sound, options);
+		this.playlist = playlist;
+	}
 
 	static get defaultOptions()
 	{
 		return mergeObject(super.defaultOptions, {
 			title: `Playlist: Import Track`,
 			template: `${MusicStreaming.templatePath}/importTrackForm.html`,
-			width: 500
+			width: 360
 		});
 	}
 
+	/** @override */
+	get title()
+	{
+		return `${this.playlist.name} Playlist: ${this.object.name || "New Track"}`;
+	}
+
+	/** @override */
 	getData()
 	{
-		return {
-			playlistName: this.object.playlist.name,
-			name: this.object.name,
-			url: this.object.url,
-			volume: this.object.volume,
-			repeat: this.object.repeat ? 'checked' : '',
-		};
+		const data = duplicate(this.object);
+		data.lvolume = AudioHelper.volumeToInput(data.volume);
+		data.url = data.flags !== undefined ? data.flags.url : '';
+		return data;
 	}
 
 	activateListeners(html)
@@ -43,7 +53,11 @@ class ImportTrackForm extends FormApplication
 		});
 		onChange("input[name='url']", event =>
 		{
-			this.object.url = event.target.value;
+			if (this.object.flags === undefined)
+			{
+				this.object.flags = {};
+			}
+			this.object.flags.url = event.target.value;
 			this.render();
 		});
 		onChange("input[name='volume']", event =>
@@ -58,21 +72,24 @@ class ImportTrackForm extends FormApplication
 		});
 	}
 
-	async _updateObject(event, {
-		name, url, volume, repeat
-	})
+	/** @override */
+	async _updateObject(event, formData)
 	{
-		MusicStreaming.log(name, url, volume, repeat);
-		const sound = await this.object.playlist.createEmbeddedEntity(
-			"PlaylistSound", {
-				name: name,
-				path: "invalid.mp3",
-				volume: volume,
-				repeat: repeat,
-				url: url,
-			}, {}
-		);
-		MusicStreaming.log(sound);
+		if (!game.user.isGM) throw "You do not have the ability to edit playlist sounds.";
+
+		formData["volume"] = AudioHelper.inputToVolume(formData["lvolume"]);
+		formData['path'] = 'invalid.mp3';
+		formData['flags'] = {
+			'url': formData['url'],
+			'bStreaming': true,
+		};
+
+		if (this.object._id)
+		{
+			formData["_id"] = this.object._id;
+			return this.playlist.updateEmbeddedEntity("PlaylistSound", formData, {});
+		}
+		return this.playlist.createEmbeddedEntity("PlaylistSound", formData, {});
 	}
 
 }

@@ -13,11 +13,9 @@ export class StreamingServiceApi
 		return game.settings.get(MusicStreaming.name, 'streamingApis');
 	}
 
-	async modifySettings(modify)
+	isReady()
 	{
-		const allSettings = this.allApiSettings;
-		allSettings[this.key] = modify(allSettings[this.key]);
-		await game.settings.set(MusicStreaming.name, 'streamingApis', allSettings);
+		return this.allApiSettings[this.key].ready;
 	}
 
 	initialize() {}
@@ -25,6 +23,13 @@ export class StreamingServiceApi
 	async initSettings(settings)
 	{
 		settings[this.key] = { ready: false };
+	}
+
+	async modifySettings(modify)
+	{
+		const allSettings = this.allApiSettings;
+		modify(allSettings[this.key]);
+		await game.settings.set(MusicStreaming.name, 'streamingApis', allSettings);
 	}
 
 	// Attaches a script such that it will be loaded asynchronously
@@ -40,6 +45,7 @@ export class StreamingServiceApi
 		await this.modifySettings(settings => {
 			settings.ready = true;
 		});
+		console.log(game.settings.get(MusicStreaming.name, 'streamingApis'));
 		Hooks.call(`${MusicStreaming.name}:apiLoaded`, {
 			api: this.key
 		});

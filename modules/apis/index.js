@@ -1,6 +1,5 @@
 import * as MusicStreaming from '../config.js';
-import {YouTubeApi} from './YouTubeApi.js'
-import {SpotifyApi} from './SpotifyApi.js'
+import { YouTubeApi } from './YouTubeApi.js'
 
 export async function initializeApis()
 {
@@ -11,20 +10,25 @@ export async function initializeApis()
 		config: false
 	});
 
-	const streamingSettings = game.settings.get(MusicStreaming.name, 'streamingApis');
+	const streamingSettings = {};//game.settings.get(MusicStreaming.name, 'streamingApis');
 	game.musicStreaming = [
 		new YouTubeApi(),
-		new SpotifyApi(),
-	].reduce((apis, api) => {
+		//new SpotifyApi(),
+		//new SoundCloudApi(),
+	].reduce((apis, api) =>
+	{
 		api.initSettings(streamingSettings);
 		apis[api.key] = api;
 		return apis;
 	}, {});
 	await game.settings.set(MusicStreaming.name, 'streamingApis', streamingSettings);
-	
-	Object.values(game.musicStreaming).forEach(api => {
+
+	Object.values(game.musicStreaming).forEach(api =>
+	{
 		api.initialize();
 	});
+
+	game.getStreamingApi = getApi;
 }
 
 export function getApi(key)

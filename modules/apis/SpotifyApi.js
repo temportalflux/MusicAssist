@@ -1,5 +1,5 @@
 import * as MusicStreaming from '../config.js';
-import {StreamingServiceApi} from './StreamingServiceApi.js'
+import { StreamingServiceApi } from './StreamingServiceApi.js'
 
 export class SpotifyApi extends StreamingServiceApi
 {
@@ -7,6 +7,7 @@ export class SpotifyApi extends StreamingServiceApi
 	constructor()
 	{
 		super('spotify');
+		this.player = null;
 	}
 
 	initialize()
@@ -22,6 +23,14 @@ export class SpotifyApi extends StreamingServiceApi
 	{
 		MusicStreaming.log("SpotifyApi:Playback ready");
 		await this.markLoaded();
+
+		this.player = new Spotify.Player({
+			name: MusicStreaming.name,
+			getOAuthToken: this.getOAuthToken.bind(this),
+			volume: 0.5
+		});
+
+		const success = await this.player.connect();
 
 		/*
 		const token = '[My Spotify Web API access token]';
@@ -54,6 +63,25 @@ export class SpotifyApi extends StreamingServiceApi
 		// Connect to the player!
 		player.connect();
 		//*/
-	};
+	}
+	
+	/*
+	const id = this.player._options.id;
+	console.log(id);
+	const response = await fetch(
+		`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+		method: 'PUT',
+		body: JSON.stringify({ uris: [spotify_uri] }),
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${access_token}`
+		},
+	});
+	console.log(response);
+	//*/
+
+	async getOAuthToken(callback)
+	{
+	}
 
 }
