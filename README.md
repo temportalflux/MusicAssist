@@ -1,11 +1,11 @@
 ## MusicAssist
 
-* **Author**: (Put author’s name here, including Discord username. If they accept contributions in code or donations, note this here as well.)
-* **Version**: (Note current version of module here.)
-* **Foundry VTT Compatibility**: (Note which versions of Foundry Virtual Tabletop the module is compatible with.)
-* **System Compatibility (If applicable)**: (Note which systems of Foundry Virtual Tabletop the module is compatible with.)
-* **Module Requirement(s)**: (If the module requires other modules to function, note them here.)
-* **Module Conflicts**: (If the module conflicts with other modules, either partially or completely, note conflicts here.)
+* **Author**: temportalflux (discord: temportalflux#3142)
+* **Version**: 0.1.0
+* **Foundry VTT Compatibility**: 0.5.5+
+* **System Compatibility (If applicable)**: n/a
+* **Module Requirement(s)**: n/a
+* **Module Conflicts**: possibly other modules which mess with playlists and sound playback
 * **Translation Support**: (Note which languages are supported, and if they have (full) or (partial) translations.
 
 ### Link(s) to Module
