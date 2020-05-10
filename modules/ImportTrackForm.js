@@ -1,4 +1,5 @@
 import * as MusicStreaming from './config.js';
+import { htmlOnChange } from './patches/patcher.js';
 
 export class ImportTrackForm extends FormApplication
 {
@@ -37,21 +38,12 @@ export class ImportTrackForm extends FormApplication
 	{
 		super.activateListeners(html);
 
-		const onChange = (queryString, callback) =>
-		{
-			const query = html.find(queryString);
-			if (query.length > 0)
-			{
-				query.on("change", callback);
-			}
-		};
-
-		onChange("input[name='name']", event =>
+		htmlOnChange(html, "input[name='name']", event =>
 		{
 			this.object.name = event.target.value;
 			this.render();
 		});
-		onChange("input[name='url']", event =>
+		htmlOnChange(html, "input[name='url']", event =>
 		{
 			if (this.object.flags === undefined)
 			{
@@ -60,12 +52,12 @@ export class ImportTrackForm extends FormApplication
 			this.object.flags.url = event.target.value;
 			this.render();
 		});
-		onChange("input[name='volume']", event =>
+		htmlOnChange(html, "input[name='volume']", event =>
 		{
 			this.object.volume = event.target.value;
 			this.render();
 		});
-		onChange("input[name='repeat']", event =>
+		htmlOnChange(html, "input[name='repeat']", event =>
 		{
 			this.object.repeat = event.target.checked;
 			this.render();

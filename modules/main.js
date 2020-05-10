@@ -1,6 +1,5 @@
 import * as MusicStreaming from './config.js'
 import { initializeApis } from './apis/index.js'
-import './ui/StreamingPlaylistDirectory.js';
 import './patches/index.js';
 
 Hooks.on("init", async () =>

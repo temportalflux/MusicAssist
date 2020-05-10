@@ -7,7 +7,7 @@ export class YouTubePlayer
 		if (player == null)
 		{
 			player = new YouTubePlayer(playlistId, soundId, streamingUrl);
-			$('body').append(`<div style="display: block;"><div id="${player.playerId}"></div></div>`);
+			$('body').append(`<div style="display: none;"><div id="${player.playerId}"></div></div>`);
 			player.createPlayer();
 		}
 		return player;
@@ -44,9 +44,10 @@ export class YouTubePlayer
 		this.soundId = soundId;
 		this.player = null;
 		this.size = {
-			width: '0',
-			height: '0',
+			width: '128',
+			height: '128',
 		};
+		this.volume = 0;
 		this.videoId = this.parseVideoId(streamingUrl);
 		this.playOnVideoLoaded = false; // if the video is waiting to play as soon as it loads
 		this.shouldLoop = false; // if the player should loop after having completed playing the video
@@ -127,6 +128,7 @@ export class YouTubePlayer
 	// Happens on video load
 	onYTPlayerReady(evt)
 	{
+		this.setVolume(this.volume);
 		if (this.playOnVideoLoaded)
 		{
 			this.playOnVideoLoaded = false;
@@ -136,23 +138,28 @@ export class YouTubePlayer
 
 	hasPlayer()
 	{
-		return this.player !== null;
+		return this.player !== null && this.player !== undefined;
+	}
+
+	canQueryState()
+	{
+		return this.hasPlayer() && typeof(this.player.getPlayerState) === 'function';
 	}
 
 	isLoaded()
 	{
 		// 3 = buffering
-		return this.hasPlayer() ? this.player.getPlayerState() !== 3 : false;
+		return this.canQueryState() ? this.player.getPlayerState() !== 3 : false;
 	}
 
 	isPlaying()
 	{
-		return this.hasPlayer() ? this.player.getPlayerState() === 1 : false;
+		return this.canQueryState() ? this.player.getPlayerState() === 1 : false;
 	}
 
 	hasEnded()
 	{
-		return this.hasPlayer() ? this.player.getPlayerState() === 0 : false;
+		return this.canQueryState() ? this.player.getPlayerState() === 0 : false;
 	}
 
 	startPlaying()
@@ -183,9 +190,19 @@ export class YouTubePlayer
 
 	setVolume(volume)
 	{
-		if (this.hasPlayer())
+		this.volume = volume;
+		if (this.hasPlayer() && typeof(this.player.setVolume) === 'function')
 		{
 			this.player.setVolume(volume * 100);
+		}
+	}
+
+	delete()
+	{
+		if (this.hasPlayer())
+		{
+			this.player.destroy();
+			$(`#${this.playerId}`).parent().remove();
 		}
 	}
 

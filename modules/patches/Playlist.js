@@ -1,5 +1,5 @@
 import {overrideFunc} from './patcher.js'
-import {YouTubePlayer} from '../players/YouTubePlayer.js';
+import {YouTubePlayer} from '../apis/YouTubePlayer.js';
 
 /**
  * Set up the Howl object by calling the core AudioHelper utility
@@ -36,5 +36,17 @@ overrideFunc(Playlist.prototype, 'playSound', function(super_playSound, sound)
 	else
 	{
 		ytPlayer.stopPlaying();
+	}
+});
+
+overrideFunc(Playlist.prototype, '_onDeleteEmbeddedEntity', function(
+	super_onDeleteEmbeddedEntity,
+	embeddedName, child, options, userId
+)
+{
+	super_onDeleteEmbeddedEntity.call(this);
+	if (child.flags.bStreaming)
+	{
+		// TODO: Delete player
 	}
 });
