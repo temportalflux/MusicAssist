@@ -2,7 +2,7 @@
 
 * **Author**: temportalflux (discord: temportalflux#3142)
 * **Version**: 0.1.0
-* **Foundry VTT Compatibility**: 0.5.5+
+* **Foundry VTT Compatibility**: 0.5.5+ (possibly older versions)
 * **System Compatibility (If applicable)**: n/a
 * **Module Requirement(s)**: n/a
 * **Module Conflicts**: no known conflicts, but its plausible that any modules change the playlist or ambient sound data could conflict
