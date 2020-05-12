@@ -16,7 +16,7 @@
   ],
   "url": "https://github.com/temportalflux/MusicAssist",
   "manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
-  "download": "",
+  "download": "https://github.com/temportalflux/MusicAssist/releases/download/v0.0.1/MusicAssist-v0.0.1.zip",
   "socket": true,
   "debugBuildDirectory": "C:\\Users\\Dustin Yost\\AppData\\Local\\FoundryVTT\\Data\\modules\\",
   "packageItems": [
