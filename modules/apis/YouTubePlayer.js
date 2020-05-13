@@ -75,11 +75,25 @@ export class YouTubePlayer
 		this.createPlayer();
 	}
 
+	getSupportedUrlFormats()
+	{
+		return [
+			// Long links, extracts video id
+			/https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([^\s&]){11}.*/,
+			// short links, extracts video id
+			/https?:\/\/(?:www\.)?youtu\.be\/([^\s&]){11}.*/
+		];
+	}
+
+	matchUrlAgainstSupported(url)
+	{
+		return url !== undefined ? getSupportedUrlFormats().find(r => url.trim().match(r) !== null) : undefined;
+	}
+
 	parseVideoId(url)
 	{
-		if (url === undefined) { return ''; }
-		const regexMatch = url.trim().match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
-		return regexMatch !== null ? regexMatch[1] : null;
+		const regexMatch = matchUrlAgainstSupported(url);
+		return regexMatch !== undefined && regexMatch !== null ? regexMatch[1] : null;
 	}
 
 	createPlayer()
