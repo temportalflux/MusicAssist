@@ -35,7 +35,6 @@ export function htmlOnChange(html, queryString, callback)
 export function htmlEvent(html, queryString, evt, callback)
 {
 	const query = html.find(queryString);
-	console.log(html, queryString, query);
 	if (query.length > 0)
 	{
 		query.on(evt, callback);

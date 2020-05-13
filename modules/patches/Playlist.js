@@ -2,7 +2,6 @@ import {overrideFunc} from './patcher.js'
 import { getApi } from '../apis/index.js';
 
 Playlist.prototype.findOrCreatePlayer = function(sound) {
-	console.log(sound);
 	if (sound.flags.bIsStreamed && sound.flags.streamingApi !== undefined)
 	{
 		return getApi(sound.flags.streamingApi).findOrCreatePlayer(
