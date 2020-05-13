@@ -78,7 +78,7 @@ export class YouTubePlayer
 	parseVideoId(url)
 	{
 		if (url === undefined) { return ''; }
-		const regexMatch = url.trim().match(/.*youtube\.com\/watch\?v=(.{11}).*/);
+		const regexMatch = url.trim().match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
 		return regexMatch !== null ? regexMatch[1] : null;
 	}
 
