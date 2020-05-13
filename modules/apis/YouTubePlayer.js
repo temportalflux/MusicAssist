@@ -1,18 +1,6 @@
 export class YouTubePlayer
 {
 
-	static findOrCreatePlayer(playlistId, soundId, streamingUrl)
-	{
-		var player = YouTubePlayer.findPlayerByIds(playlistId, soundId);
-		if (player == null)
-		{
-			player = new YouTubePlayer(playlistId, soundId, streamingUrl);
-			$('body').append(`<div style="display: none;"><div id="${player.playerId}"></div></div>`);
-			player.createPlayer();
-		}
-		return player;
-	}
-
 	static findPlayer(playerId)
 	{
 		return game.getStreamingApi('youtube').getPlayerAt(playerId);
@@ -33,12 +21,35 @@ export class YouTubePlayer
 		YouTubePlayer.findPlayer(playerId).onYTPlayerReady(evt);
 	}
 
-	static _onError(evt)
+	static _onError(sourceId, evt)
 	{
-		console.error('Error in youtube player', evt);
+		if (evt.data === 2 && sourceId === '') { return; }
+		var errorMessage = 'unknown';
+		switch (evt.data)
+		{
+			case 2:
+				errorMessage = 'Invalid ID value';
+				break;
+			case 5:
+				errorMessage = 'Content is not supporte don HTML5 player';
+				break;
+			case 100:
+				errorMessage = 'Video not found';
+				break;
+			case 101:
+			case 150:
+				errorMessage = 'Embedded player not supported by owner';
+				break;
+			default:
+		}
+		console.error('Error in youtube player', {
+			code: evt.data,
+			message: errorMessage,
+			sourceId: sourceId,
+		});
 	}
 
-	constructor(playlistId, soundId, streamingUrl)
+	constructor(playlistId, soundId, sourceId)
 	{
 		this.playlistId = playlistId;
 		this.soundId = soundId;
@@ -48,7 +59,7 @@ export class YouTubePlayer
 			height: '128',
 		};
 		this.volume = 0;
-		this.videoId = this.parseVideoId(streamingUrl);
+		this.videoId = sourceId;
 		this.playOnVideoLoaded = false; // if the video is waiting to play as soon as it loads
 		this.shouldLoop = false; // if the player should loop after having completed playing the video
 		
@@ -75,38 +86,17 @@ export class YouTubePlayer
 		this.createPlayer();
 	}
 
-	getSupportedUrlFormats()
-	{
-		return [
-			// Long links, extracts video id
-			/https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([^\s&]){11}.*/,
-			// short links, extracts video id
-			/https?:\/\/(?:www\.)?youtu\.be\/([^\s&]){11}.*/
-		];
-	}
-
-	matchUrlAgainstSupported(url)
-	{
-		return url !== undefined ? getSupportedUrlFormats().find(r => url.trim().match(r) !== null) : undefined;
-	}
-
-	parseVideoId(url)
-	{
-		const regexMatch = matchUrlAgainstSupported(url);
-		return regexMatch !== undefined && regexMatch !== null ? regexMatch[1] : null;
-	}
-
 	createPlayer()
 	{
 		if (!this.api.isReady()) { return; }
-		console.log('Creating YouTubePlayer', this.playerId);
+		console.log('Creating YouTubePlayer', this.playerId, this.videoId);
 		this.player = new YT.Player(this.playerId, {
 			...this.size,
 			videoId: this.videoId, // load by function
 			events: {
 				'onReady': YouTubePlayer._onYTPlayerReady.bind(null, this.playerId),
 				'onStateChange': YouTubePlayer._onYTPlayerStateChange.bind(null, this.playerId),
-				'onError': YouTubePlayer._onError,
+				'onError': YouTubePlayer._onError.bind(null, this.videoId),
 			},
 		});
 	}
@@ -119,17 +109,16 @@ export class YouTubePlayer
 		}
 	}
 
-	ensureLoaded(url)
+	ensureLoaded(sourceId)
 	{
-		const urlVideoId = this.parseVideoId(url);
 		if (!this.hasPlayer())
 		{
-			this.videoId = urlVideoId;
+			this.videoId = sourceId;
 		}
-		else if (this.videoId !== urlVideoId)
+		else if (this.videoId !== sourceId)
 		{
 			this.stopPlaying();
-			this.loadVideoId(urlVideoId);
+			this.loadVideoId(sourceId);
 		}
 	}
 

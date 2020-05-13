@@ -1,5 +1,6 @@
 import * as MusicStreaming from './config.js';
 import { htmlOnChange } from './patches/patcher.js';
+import { getApi } from './apis/index.js';
 
 export class ImportTrackForm extends FormApplication
 {
@@ -72,8 +73,8 @@ export class ImportTrackForm extends FormApplication
 		formData["volume"] = AudioHelper.inputToVolume(formData["lvolume"]);
 		formData['path'] = 'invalid.mp3';
 		formData['flags'] = {
-			'url': formData['url'],
-			'bStreaming': true,
+			'streamingId': getApi('youtube').extractSourceIdFromUrl(formData['url']),
+			'bIsStreamed': true,
 		};
 
 		if (this.object._id)

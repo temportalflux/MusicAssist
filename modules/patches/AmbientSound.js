@@ -1,14 +1,14 @@
 import { overrideFunc } from './patcher.js';
-import {YouTubePlayer} from '../apis/YouTubePlayer.js';
+import { getApi } from '../apis/index.js';
 
 AmbientSound.prototype.findOrCreatePlayer = function() {
-	if (this.data.flags.bIsStreamed)
+	if (this.data.flags.bIsStreamed && this.data.flags.streamingApi !== undefined)
 	{
-		return YouTubePlayer.findOrCreatePlayer(
-			this.scene.id, this.id, this.data.flags.url
+		return getApi(this.data.flags.streamingApi).findOrCreatePlayer(
+			this.scene.id, this.id, this.data.flags.streamingId
 		);
 	}
-	return null;
+	return undefined;
 };
 
 overrideFunc(AmbientSound.prototype, '_onCreate', function(
@@ -27,9 +27,13 @@ overrideFunc(AmbientSound.prototype, '_onUpdate', function(
 {
 	super_onUpdate.call(this, data);
 	const changed = new Set(Object.keys(data));
-	if (this.data.flags.bIsStreamed && changed.has('url'))
+	// NOTE: If more APIs are ever added, its possible that if the streamingApi changes,
+	// the player for the previous API will be left hanging
+	if (this.data.flags.bIsStreamed && (
+		changed.has('streamingApi') || changed.has('streamingId')
+	))
 	{
-		this.findOrCreatePlayer().ensureLoaded(this.data.flags.url);
+		this.findOrCreatePlayer().ensureLoaded(this.data.flags.streamingId);
 	}
 });
 

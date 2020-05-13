@@ -17,7 +17,7 @@ A module for FoundryVTT which adds support for youtube tracks in audio playlists
 
 The current feature set includes:
 - Playlist tracks can be imported from a youtube url such as `https://www.youtube.com/watch?v=_2xHCZSqpi4`
-- Ambient Sound objects acn be marked as streaming sounds with the same functionality as streamed playlist tracks (these are unable to fade however)
+- Ambient Sound objects can be marked as streaming sounds with the same functionality as streamed playlist tracks (these are unable to fade however)
 
 ### Installation
 Import the [module.json](https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json) as you would any other module. The contents of the module directory should look similar to this github repository's root.

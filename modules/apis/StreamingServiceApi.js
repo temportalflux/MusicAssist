@@ -18,6 +18,8 @@ export class StreamingServiceApi
 		return this.allApiSettings[this.key].ready;
 	}
 
+	getId() { return this.key; }
+
 	initialize() {}
 
 	async initSettings(settings)
@@ -49,6 +51,21 @@ export class StreamingServiceApi
 		Hooks.call(`${MusicStreaming.name}:apiLoaded`, {
 			api: this.key
 		});
+	}
+
+	extractSourceIdFromUrl(url)
+	{
+		return undefined;
+	}
+
+	supportsUrl(url)
+	{
+		return this.extractSourceIdFromUrl(url) !== undefined;
+	}
+
+	findOrCreatePlayer(ownerId, audioId, sourceId)
+	{
+		return undefined;
 	}
 
 }

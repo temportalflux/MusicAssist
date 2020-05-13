@@ -1,12 +1,12 @@
 import { overrideFunc } from './patcher.js';
 import { applyStreamingSoundConfig } from './SoundConfig.js';
 
-Hooks.on('renderAmbientSoundConfig', (cfg, html, data) =>
+Hooks.on('renderPlaylistSoundConfig', (cfg, html, data) =>
 {
-	applyStreamingSoundConfig(html, data.object);
+	applyStreamingSoundConfig(html, data);
 });
 
-overrideFunc(AmbientSoundConfig.prototype, '_updateObject', function(super_updateObject, evt, formData, etc)
+overrideFunc(PlaylistSoundConfig.prototype, '_updateObject', function(super_updateObject, evt, formData, etc)
 {
 	if (!game.user.isGM) throw "You do not have the ability to configure an AmbientSound object.";
 
@@ -15,7 +15,9 @@ overrideFunc(AmbientSoundConfig.prototype, '_updateObject', function(super_updat
 		super_updateObject.call(this, evt, formData, etc);
 		return;
 	}
-	
+
+	formData["volume"] = AudioHelper.inputToVolume(formData["lvolume"]);
+
 	formData.path = 'invalid.mp3';
 	formData.flags = {
 		bIsStreamed: formData.streamed,
@@ -23,9 +25,10 @@ overrideFunc(AmbientSoundConfig.prototype, '_updateObject', function(super_updat
 		streamingId: formData.url,
 	};
 
-	if ( this.object.id ) {
-		formData["id"] = this.object.id;
-		this.object.update(formData);
+	if (this.object._id)
+	{
+		formData["_id"] = this.object._id;
+		this.playlist.updateEmbeddedEntity("PlaylistSound", formData, {});
 	}
-	else this.object.constructor.create(formData);
+	else this.playlist.createEmbeddedEntity("PlaylistSound", formData, {});
 });
