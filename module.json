@@ -1,36 +1,35 @@
 {
-  "name": "music-assist",
-  "title": "MusicAssist",
-  "description": "<p>A little helper which provides the ability to stream audio from remote sources (like youtube).</p>",
-  "author": "temportalflux",
-  "version": "0.1.1",
-  "minimumCoreVersion": "0.5.3",
-  "esmodules": [
-    "./modules/main.js"
-  ],
-  "styles": [
-    "./styles/music-assist.css"
-  ],
-  "templates": [
-  ],
-  "url": "https://github.com/temportalflux/MusicAssist",
-  "manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
-  "download": "https://github.com/temportalflux/MusicAssist/releases/download/v0.0.1/MusicAssist-v0.0.1.zip",
-  "socket": true,
-  "debugBuildDirectory": "C:\\Users\\Dustin Yost\\AppData\\Local\\FoundryVTT\\Data\\modules\\",
-  "packageItems": [
-    "icons",
-    "lang",
-    "modules",
-    "packs",
-    "styles",
-    "templates",
-    "module.json",
-    "README.md"
-  ],
-  "icons": [
-    "./icons/music-spell.png",
-    "./icons/music-spell.svg"
-  ],
-  "scripts": []
+	"name": "music-assist",
+	"title": "MusicAssist",
+	"description": "A little helper which provides the ability to stream audio from remote sources (like youtube).",
+	"author": "temportalflux",
+	"version": "0.1.0",
+	"minimumCoreVersion": "0.5.3",
+	"esmodules": [
+		"./modules/main.js"
+	],
+	"styles": [
+		"./styles/music-assist.css"
+	],
+	"templates": [],
+	"url": "https://github.com/temportalflux/MusicAssist",
+	"manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
+	"download": "https://github.com/temportalflux/MusicAssist/releases/download/v0.1.0/MusicAssist-v0.1.0.zip",
+	"socket": true,
+	"debugBuildDirectory": "C:\\Users\\Dustin Yost\\AppData\\Local\\FoundryVTT\\Data\\modules\\",
+	"packageItems": [
+		"icons",
+		"lang",
+		"modules",
+		"packs",
+		"styles",
+		"templates",
+		"module.json",
+		"README.md"
+	],
+	"icons": [
+		"./icons/music-spell.png",
+		"./icons/music-spell.svg"
+	],
+	"scripts": []
 }
