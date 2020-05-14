@@ -27,4 +27,4 @@ Import the [module.json](https://raw.githubusercontent.com/temportalflux/MusicAs
 
 The only currently supported source for streamed content is [YouTube](https://www.youtube.com/) (via their [iFrame Api](https://developers.google.com/youtube/iframe_api_reference)).
 
-The explored possibnle providers are all logged in the [api support tickets](https://github.com/temportalflux/MusicAssist/issues?q=label%3Aapi-support). If a provider is not listed in there, please feel free to make a ticket with the `api-support` label!
+The explored possibnle providers are all logged in the [api support tickets](https://github.com/temportalflux/MusicAssist/issues?q=label%3Aapi). If a provider is not listed in there, please feel free to make a ticket with the `api-support` label!
