@@ -1,4 +1,5 @@
 ## MusicAssist
+---
 
 * **Author**: temportalflux (discord: temportalflux#3142)
 * **Version**: 0.1.0
@@ -22,4 +23,8 @@ The current feature set includes:
 ### Installation
 Import the [module.json](https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json) as you would any other module. The contents of the module directory should look similar to this github repository's root.
 
----
+### Supported Providers
+
+The only currently supported source for streamed content is [YouTube](https://www.youtube.com/) (via their [iFrame Api](https://developers.google.com/youtube/iframe_api_reference)).
+
+The explored possibnle providers are all logged in the [api support tickets](https://github.com/temportalflux/MusicAssist/issues?q=label%3Aapi-support). If a provider is not listed in there, please feel free to make a ticket with the `api-support` label!
