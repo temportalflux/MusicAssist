@@ -5,6 +5,7 @@
 	"author": "temportalflux",
 	"version": "0.1.0",
 	"minimumCoreVersion": "0.5.3",
+	"compatibleCoreVersion": "0.5.5",
 	"esmodules": [
 		"./modules/main.js"
 	],
