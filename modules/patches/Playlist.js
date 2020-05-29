@@ -36,17 +36,11 @@ overrideFunc(Playlist.prototype, 'playSound', function(super_playSound, sound)
 	}
 
 	const ytPlayer = this.findOrCreatePlayer(sound);
-	ytPlayer.ensureLoaded(sound.flags.streamingId);
+	console.log('playSound', sound.flags.streamingId, sound.playing);
+	ytPlayer.setSourceId(sound.flags.streamingId);
 	ytPlayer.setLoop(sound.repeat);
 	ytPlayer.setVolume(sound.volume * game.settings.get("core", "globalPlaylistVolume"));
-	if (sound.playing)
-	{
-		ytPlayer.startPlaying();
-	}
-	else
-	{
-		ytPlayer.stopPlaying();
-	}
+	ytPlayer.ensurePlaying(sound.playing);
 });
 
 overrideFunc(Playlist.prototype, '_onDeleteEmbeddedEntity', function(
@@ -55,6 +49,7 @@ overrideFunc(Playlist.prototype, '_onDeleteEmbeddedEntity', function(
 )
 {
 	super_onDeleteEmbeddedEntity.call(this, embeddedName, child, options, userId);
+	console.log('Deleting', child);
 	if (child.flags.bIsStreamed)
 	{
 		this.findOrCreatePlayer(child).delete();

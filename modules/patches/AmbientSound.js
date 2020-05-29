@@ -33,7 +33,7 @@ overrideFunc(AmbientSound.prototype, '_onUpdate', function(
 		changed.has('streamingApi') || changed.has('streamingId')
 	))
 	{
-		this.findOrCreatePlayer().ensureLoaded(this.data.flags.streamingId);
+		this.findOrCreatePlayer().setSourceId(this.data.flags.streamingId);
 	}
 });
 

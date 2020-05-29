@@ -65,8 +65,9 @@ export class YouTubeApi extends StreamingServiceApi
 		if (player === null || player === undefined)
 		{
 			player = new YouTubePlayer(ownerId, audioId, sourceId);
-			$('body').append(`<div style="display: none;"><div id="${player.playerId}"></div></div>`);
-			player.createPlayer();
+			// display: none;
+			$('body').append(`<div style=""><div id="${player.playerId}"></div></div>`);
+			//player.createPlayer();
 		}
 		return player;
 	}
