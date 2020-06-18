@@ -1,36 +1,44 @@
 {
-	"name": "music-assist",
-	"title": "MusicAssist",
-	"description": "A little helper which provides the ability to stream audio from remote sources (like youtube).",
-	"author": "temportalflux",
-	"version": "0.1.0",
-	"minimumCoreVersion": "0.5.3",
-	"compatibleCoreVersion": "0.5.5",
-	"esmodules": [
-		"./modules/main.js"
-	],
-	"styles": [
-		"./styles/music-assist.css"
-	],
-	"templates": [],
-	"url": "https://github.com/temportalflux/MusicAssist",
-	"manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
-	"download": "https://github.com/temportalflux/MusicAssist/releases/download/v0.1.0/MusicAssist-v0.1.0.zip",
-	"socket": true,
-	"debugBuildDirectory": "C:\\Users\\Dustin Yost\\AppData\\Local\\FoundryVTT\\Data\\modules\\",
-	"packageItems": [
-		"icons",
-		"lang",
-		"modules",
-		"packs",
-		"styles",
-		"templates",
-		"module.json",
-		"README.md"
-	],
-	"icons": [
-		"./icons/music-spell.png",
-		"./icons/music-spell.svg"
-	],
-	"scripts": []
+  "name": "music-assist",
+  "title": "MusicAssist",
+  "description": "A little helper which provides the ability to stream audio from remote sources (like youtube).",
+  "author": "temportalflux",
+  "version": "0.1.0",
+  "minimumCoreVersion": "0.5.3",
+  "compatibleCoreVersion": "0.5.5",
+  "esmodules": [
+    "./modules/main.js"
+  ],
+  "styles": [
+    "./styles/music-assist.css"
+  ],
+  "templates": [
+    "./templates/import-youtube-playlist.html"
+  ],
+  "url": "https://github.com/temportalflux/MusicAssist",
+  "manifest": "https://raw.githubusercontent.com/temportalflux/MusicAssist/master/module.json",
+  "download": "https://github.com/temportalflux/MusicAssist/releases/download/v0.1.0/MusicAssist-v0.1.0.zip",
+  "socket": true,
+  "debugBuildDirectory": "D:\\Documents\\FoundryVTT\\Data\\modules",
+  "packageItems": [
+    "icons",
+    "lang",
+    "modules",
+    "styles",
+    "templates",
+    "module.json",
+    "README.md"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "icons": [
+    "./icons/music-spell.png",
+    "./icons/music-spell.svg"
+  ],
+  "scripts": []
 }
