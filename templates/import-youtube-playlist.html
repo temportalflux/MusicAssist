@@ -1,5 +1,26 @@
-<form autocomplete="off">
-	<div>
-		Hello World: {{myVar}}
+<form id="playlist-yt-import" autocomplete="off" onsubmit="event.preventDefault();">
+	<p class="notes">{{localize 'music-assist.import-yt-playlist-notes'}}</p>
+	<div class="form-group">
+		<div class="form-fields">
+			<input id="music-assist-yt-import-url-text" type="text" placeholder="https://www.youtube.com/playlist?list=PLccmC0-jXVkiQF1uMehdwqSlpXafNAe_e">
+			<button id="music-assist-yt-import-btn-import" type="button" name="import"><i class="fas fa-file-import"></i></button>
+		</div>
 	</div>
+	<section>
+		<ol>
+			<li>
+				song 1 - 12315679
+			</li>
+			<li>
+				song 2 - 12315676
+			</li>
+			<li>
+				song 3 - 12315674
+			</li>
+			<li>
+				song 4 - 12315671
+			</li>
+		</ol>
+	</section>
+	<button id="music-assist-yt-import-btn-confirm" type="submit" name="submit" disabled><i class="fas fa-check"></i>{{localize 'music-assist.import-yt-playlist-btn-submit'}}</button>
 </form>

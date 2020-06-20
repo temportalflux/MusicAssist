@@ -1,3 +1,7 @@
 {
-	"music-assist.import-youtube-playlist": "Import Youtube Playlist"
+	"music-assist.import-yt-playlist-nav-text": "Import YouTube Playlist",
+	"music-assist.import-yt-playlist-notes": "Enter a youtube playlist url or playlist ID below and click the import button next to it to get started.",
+	"music-assist.import-yt-playlist-btn-import": "Import",
+	"music-assist.import-yt-playlist-btn-submit": "Confirm",
+	"music-assist.import-yt-playlist-msg-invalidkey": "Please enter a valid youtube playlist url (with list in the querystring) or a playlist ID"
 }
