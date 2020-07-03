@@ -2,6 +2,10 @@ import { YouTubePlaylistImportService } from '../apis/YouTubePlaylistImportServi
 
 export class YouTubePlaylistImportApp extends FormApplication {
 	constructor(object = {}, options = null) {
+    if (!options) {
+      options = {};
+    }
+    options.height = 'auto';
     super(object, options);
     this.importService = new YouTubePlaylistImportService();
     this.playlistItems = [];
@@ -18,14 +22,18 @@ export class YouTubePlaylistImportApp extends FormApplication {
 	activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('button[id="music-assist-yt-import-btn-import"]').click(() => {
-      this._onImportPlaylist(html.find('input[id="music-assist-yt-import-url-text"]')[0].value);
+    html.find('button[id="music-assist-yt-import-btn-import"]').click(async () => {
+      let spinner = html.find('div.playlist-import-loading-spinner')[0];
+      spinner.classList.remove('hidden');
+      await this._onImportPlaylist(html.find('input[id="music-assist-yt-import-url-text"]')[0].value);
+      this.render(false);
+      this.setPosition();
     });
 	}
 
 	getData() {
     return {
-        myVar: 'This is a test var'
+        playlistItems: this.playlistItems
     };
   }
 

@@ -6,21 +6,17 @@
 			<button id="music-assist-yt-import-btn-import" type="button" name="import"><i class="fas fa-file-import"></i></button>
 		</div>
 	</div>
-	<section>
+	<div class="playlist-import-loading-spinner hidden"></div>
+	<section class="playlist-import-container">
+		{{#if playlistItems}}
 		<ol>
+			{{#each playlistItems}}
 			<li>
-				song 1 - 12315679
+				{{this.title}}
 			</li>
-			<li>
-				song 2 - 12315676
-			</li>
-			<li>
-				song 3 - 12315674
-			</li>
-			<li>
-				song 4 - 12315671
-			</li>
+			{{/each}}
 		</ol>
+		{{/if}}
 	</section>
 	<button id="music-assist-yt-import-btn-confirm" type="submit" name="submit" disabled><i class="fas fa-check"></i>{{localize 'music-assist.import-yt-playlist-btn-submit'}}</button>
 </form>
