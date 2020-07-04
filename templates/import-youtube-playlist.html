@@ -2,13 +2,23 @@
 	<p class="notes">{{localize 'music-assist.import-yt-playlist-notes'}}</p>
 	<div class="form-group">
 		<div class="form-fields">
-			<input id="music-assist-yt-import-url-text" type="text" placeholder="https://www.youtube.com/playlist?list=PLccmC0-jXVkiQF1uMehdwqSlpXafNAe_e">
-			<button id="music-assist-yt-import-btn-import" type="button" name="import"><i class="fas fa-file-import"></i></button>
+			<input type="text" id="music-assist-yt-import-url-text" placeholder="https://www.youtube.com/playlist?list=PLccmC0-jXVkiQF1uMehdwqSlpXafNAe_e">
+			<button type="button" id="music-assist-yt-import-btn-import" name="import"><i class="fas fa-file-import"></i></button>
 		</div>
 	</div>
-	<div class="playlist-import-loading-spinner hidden"></div>
+	{{#if working}}
+	<div class="playlist-import-loading-spinner"></div>
+	{{/if}}
+	{{#if playlistItems}}
+	<div class="form-group">
+		<label for="music-assist-yt-import-playlist-name">{{localize 'music-assist.import-yt-playlist-lbl-name'}}:</label>
+		<input type="text" id="music-assist-yt-import-playlist-name" name="playlistname">
+	</div>
+	<div class="form-group">
+		<label for="music-assist-yt-import-playlist-volume">{{localize 'music-assist.import-yt-playlist-lbl-volume'}}:</label>
+		<input type="range" class="sound-volume" id="music-assist-yt-import-playlist-volume" val="0.5" min="0" max="1" step="0.05" name="playlistvolume">
+	</div>
 	<section class="playlist-import-container">
-		{{#if playlistItems}}
 		<ol>
 			{{#each playlistItems}}
 			<li>
@@ -16,7 +26,9 @@
 			</li>
 			{{/each}}
 		</ol>
-		{{/if}}
 	</section>
-	<button id="music-assist-yt-import-btn-confirm" type="submit" name="submit" disabled><i class="fas fa-check"></i>{{localize 'music-assist.import-yt-playlist-btn-submit'}}</button>
+	{{/if}}
+	<button type="submit" id="music-assist-yt-import-btn-confirm" name="submit" {{#unless playlistItems}}disabled{{/unless}}>
+		<i class="fas fa-file-download"></i>{{localize 'music-assist.import-yt-playlist-btn-submit'}}
+	</button>
 </form>

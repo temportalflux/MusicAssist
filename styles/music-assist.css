@@ -6,8 +6,8 @@
 .playlist-import-container {
 	overflow: auto;
 	max-height: 300px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .playlist-import-loading-spinner {
@@ -19,6 +19,8 @@
 	height: 40px;
 	animation: spin 2s linear infinite;
 	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 @keyframes spin {
@@ -32,5 +34,5 @@
 
 /* bug in foundry's styling obscures ordered lists larger than 100. */
 .playlist-import-container > ol {
-	 margin: 0 0 0 2.25em;
+	 margin-left: 1.75em;
 }

@@ -35,7 +35,7 @@ export class YouTubePlaylistImportService {
 	constructor() { 
 		this.youTubeApiScraperService = new YouTubeApiScraperService();
 	}
-
+	
 	extractPlaylistKey(playlistString) {
 		//YouTube url (any string with a list querystring var)
 		//No reliable regex lookbehind for all browsers yet, so we'll just get the first capture group instead
@@ -51,7 +51,7 @@ export class YouTubePlaylistImportService {
 		if (matches) {
 			return matches[1];
 		} else {
-			return playlistString.match(keyRegEx);
+			return playlistString.match(keyRegEx)[0];
 		}
 	}
 	
@@ -84,7 +84,7 @@ export class YouTubePlaylistImportService {
 			player = createYoutubePlaylistPlayer(playlistKey);
 
 			player.addEventListener('onReady', async (event) => {
-				try{
+				try {
 					var videos = await this.youTubeApiScraperService.scrapeVideoNames(event.target);
 					resolve(videos);
 				}
@@ -99,12 +99,50 @@ export class YouTubePlaylistImportService {
 			});
 
 			player.addEventListener('onError', event => {
-				MusicStreaming.log('Playlist player error!');
 				MusicStreaming.log('YT Player errored with code: ' + event.data);
 				reject('YT player error: ' + event.data);
 				cleanupPlayer();
 				return;
 			});
+		});
+	}
+
+	async createFoundryVTTPlaylist(playlistName, trackList, volume) {
+		return new Promise(async (resolve, reject) => {
+			if (!playlistName || Object.prototype.toString.call(playlistName) !== "[object String]") {
+				reject('Enter playlist name');
+			}
+	
+			try {
+				let playlist = await Playlist.create({
+					"name": playlistName,
+					"shuffle": false
+				});
+	
+				let realVolume = AudioHelper.inputToVolume(volume);
+				let playlistSounds = [];
+				//videos: Arr of {id, title}
+				for (let i=0; i < trackList.length; i++) {
+					playlistSounds.push({
+						name: trackList[i].title,
+						lvolume: volume,
+						volume: realVolume,
+						path: 'invalid.mp3',
+						repeat: false,
+						streamed: true,
+						flags: {
+							bIsStreamed: true,
+							streamingApi: 'youtube',
+							streamingId: trackList[i].id
+						}
+					});
+				}
+	
+				await playlist.createEmbeddedEntity("PlaylistSound", playlistSounds);
+				resolve();
+			} catch (ex) {
+				reject(ex);
+			}
 		});
 	}
 }

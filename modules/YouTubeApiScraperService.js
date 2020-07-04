@@ -8,10 +8,15 @@ export class YouTubeApiScraperService {
 	async scrapeVideoNames(player) {
 		return new Promise(async (resolve, reject) => {
 
+			if (!player.getPlaylist()) {
+				reject('Invalid Playlist');
+				return;
+			}
+
 			let videoMap = [];
 
 			 /*
-				* The player sometimes will do nothing (likely an API bug and onReady is being called too early) on the first track, not sure why. So here, we try three times to successfully get the right one before we start scraping. Otherwise we throw.
+				* The player sometimes will do nothing (likely an API bug and onReady is being called too early) on the first track. So here, we try three times to successfully get the right one before we start scraping. Otherwise we throw.
 				* This could probably be more elegant. The promise race works really nicely though.
 			 */
 				for (let f = 0; f < 3; f++) {
@@ -22,6 +27,7 @@ export class YouTubeApiScraperService {
 						MusicStreaming.log('getNextTrack timed out, retrying...');
 						if (f == 2) {
 							reject(ex);
+							return;
 						}
 					}
 				}
@@ -35,8 +41,6 @@ export class YouTubeApiScraperService {
 					id: data.video_id,
 					title: data.title
 				});
-
-				
 			}
 
 			resolve(videoMap);
