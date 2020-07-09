@@ -2,7 +2,7 @@ import { YouTubePlaylistImportService } from '../apis/YouTubePlaylistImportServi
 import * as MusicStreaming from '../config.js';
 
 export class YouTubePlaylistImportApp extends FormApplication {
-	constructor(object = {}, options = null) {
+  constructor(object = {}, options = null) {
     if (!options) {
       options = {};
     }
@@ -11,44 +11,44 @@ export class YouTubePlaylistImportApp extends FormApplication {
     this.importService = new YouTubePlaylistImportService();
     this.playlistItems = [];
   }
-
+  
   static get defaultOptions() {
     const options = super.defaultOptions;
     options.template = 'modules/music-assist/templates/import-youtube-playlist.html';
-		options.title = game.i18n.localize('music-assist.import-yt-playlist-nav-text');
-		
+    options.title = game.i18n.localize('music-assist.import-yt-playlist-nav-text');
+    
     return options;
   }
-
-	activateListeners(html) {
+  
+  activateListeners(html) {
     super.activateListeners(html);
-
+    
     html.find('button[id="music-assist-yt-import-btn-import"]').click(async () => {
       if (this.working) {
         ui.notifications.error(game.i18n.localize('music-assist.import-yt-playlist-msg-already-working'));
         return;
       }
-
+      
       this.working = true;
       this.error = null;
       this.playlistItems = [];
-
+      
       await this.rerender();
-
+      
       await this._onImportPlaylist(html.find('input[id="music-assist-yt-import-url-text"]')[0].value);
       this.working = false;
-
+      
       await this.rerender();
     });
-	}
-
-	getData() {
+  }
+  
+  getData() {
     return {
       working: this.working,
       playlistItems: this.playlistItems
     };
   }
-
+  
   async _onImportPlaylist(playlistStr) {
     let key = this.importService.extractPlaylistKey(playlistStr);
     if (!key) {
@@ -56,10 +56,9 @@ export class YouTubePlaylistImportApp extends FormApplication {
       return;
     }
     try {
-    this.playlistItems = await this.importService.getPlaylistInfo(key);
+      this.playlistItems = await this.importService.getPlaylistInfo(key);
     } catch(ex) {
       if (ex == 'Invalid Playlist') {
-        console.log(key);
         ui.notifications.error(game.i18n.format('music-assist.import-yt-playlist-msg-key-not-found', {playlistKey: key}));
       } else {
         ui.notifications.error(game.i18n.localize('music-assist.import-yt-playlist-msg-error'));
@@ -67,12 +66,12 @@ export class YouTubePlaylistImportApp extends FormApplication {
       }
     }
   }
-
+  
   async rerender() {
     await this._render(false);
     this.setPosition();
   }
-
+  
   async _updateObject(event, formData) {
     try {
       await this.importService.createFoundryVTTPlaylist(formData.playlistname, this.playlistItems, formData.playlistvolume);
@@ -81,5 +80,5 @@ export class YouTubePlaylistImportApp extends FormApplication {
       MusicStreaming.log(ex);
       ui.notifications.error(game.i18n.localize('music-assist.import-yt-playlist-msg-error'));
     }
-	}
+  }
 }
