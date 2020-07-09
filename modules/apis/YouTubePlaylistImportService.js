@@ -7,10 +7,13 @@ import { YouTubeApiScraperService } from '../YouTubeApiScraperService.js'
 const playerId = 'musicassist-playlist-player';
 let player;
 
-function createYoutubePlaylistPlayer(playlistId) {
+function createPlayer(playlistId) {
+	if (player != null) {
+		throw 'Player already exists';
+	}
 	$('body').append(`<div style=""><div id="${playerId}"></div></div>`);
 	
-	return new YT.Player(playerId, {
+	player = new YT.Player(playerId, {
 		width: '480px',
 		height: '270px',
 		playerVars: {
@@ -75,12 +78,13 @@ export class YouTubePlaylistImportService {
 				return;
 			}	
 			
-			if (player != null) {
-				reject('Player already exists');
+			try {
+				createPlayer(playlistKey);
+			} 
+			catch (ex) {
+				reject(ex);
 				return;
 			}
-			
-			player = createYoutubePlaylistPlayer(playlistKey);
 			
 			player.addEventListener('onReady', async (event) => {
 				try {
