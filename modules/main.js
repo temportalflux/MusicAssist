@@ -1,6 +1,6 @@
 import { initializeApis } from './apis/index.js';
 import { preloadTemplates } from './preloadTemplates.js';
-import { YouTubePlaylistImportApp  } from './display/YouTubePlaylistImportApp.js';
+import { PlaylistImportForm  } from './display/PlaylistImportForm.js';
 import './patches/index.js';
 
 Hooks.on("init", async () =>
@@ -15,7 +15,7 @@ Hooks.on("renderPlaylistDirectory", (app, html, data) => {
 			const importButton = $(`<button class="import-yt-playlist"><i class="fab fa-youtube"></i>${game.i18n.localize('music-assist.import-yt-playlist-nav-text')}</button>`);
 			html.find(".directory-footer").append(importButton);
 			importButton.click((ev) => {
-				new YouTubePlaylistImportApp().render(true);
+				new PlaylistImportForm().render(true);
 		});	
 	}
 });

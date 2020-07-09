@@ -1,7 +1,7 @@
 import { YouTubePlaylistImportService } from '../apis/YouTubePlaylistImportService.js';
 import * as MusicStreaming from '../config.js';
 
-export class YouTubePlaylistImportApp extends FormApplication {
+export class PlaylistImportForm extends FormApplication {
   constructor(object = {}, options = {}) {
 
     options.height = 'auto';
