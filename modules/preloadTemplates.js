@@ -1,7 +1,10 @@
-export const preloadTemplates = async function() {
-	const templatePaths = [
-			'modules/music-assist/templates/import-youtube-playlist.html'
-	];
+import { templates } from './config.js';
 
-	return loadTemplates(templatePaths);
+export const preloadTemplates = async function() {
+	
+	return loadTemplates(
+		Object.keys(templates).map(function(key){
+    	return templates[key];
+		})
+	);
 }

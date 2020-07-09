@@ -1,5 +1,8 @@
 export const name = 'music-streaming';
-export const templatePath = './modules/music-assist/templates';
+//add templates here
+export const templates = {
+	importYoutubePlaylist: 'modules/music-assist/templates/import-youtube-playlist.html',
+};
 export function log(...args)
 {
 	console.log(`MusicStreaming |`, ...args);

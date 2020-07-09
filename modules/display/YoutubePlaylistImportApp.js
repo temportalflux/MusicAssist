@@ -14,7 +14,7 @@ export class YouTubePlaylistImportApp extends FormApplication {
   
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.template = 'modules/music-assist/templates/import-youtube-playlist.html';
+    options.template = MusicStreaming.templates.importYoutubePlaylist;
     options.title = game.i18n.localize('music-assist.import-yt-playlist-nav-text');
     
     return options;
