@@ -3,7 +3,7 @@ import * as MusicStreaming from '../config.js';
 
 export class PlaylistImportForm extends FormApplication {
   constructor(object = {}, options = {}) {
-
+    
     options.height = 'auto';
     super(object, options);
     this.importService = new YouTubePlaylistImportService();
