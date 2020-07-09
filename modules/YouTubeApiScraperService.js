@@ -11,7 +11,7 @@ export class YouTubeApiScraperService {
 				return;
 			}
 			
-			let videoMap = [];
+			let scrapedTracks = [];
 			
 			/*
 			* The player sometimes will do nothing (likely an API bug and onReady is being called too early) on the first track. So here, we try three times to successfully get the right one before we start scraping. Otherwise we throw.
@@ -35,13 +35,13 @@ export class YouTubeApiScraperService {
 				await this.getTrack(player, i);
 				
 				let data = player.getVideoData();
-				videoMap.push({
+				scrapedTracks.push({
 					id: data.video_id,
 					title: data.title
 				});
 			}
 			
-			resolve(videoMap);
+			resolve(scrapedTracks);
 		});
 	}
 	
