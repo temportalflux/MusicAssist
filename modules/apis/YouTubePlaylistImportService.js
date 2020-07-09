@@ -28,7 +28,6 @@ function cleanupPlayer() {
 	}
 	
 	$(`#${playerId}`).parent().remove();
-	MusicStreaming.log('Playlist player destroyed!');
 }
 
 export class YouTubePlaylistImportService {
