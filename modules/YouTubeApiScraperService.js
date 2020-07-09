@@ -1,7 +1,5 @@
 import * as MusicStreaming from './config.js';
 
-const PLAYLIST_MAX_SIZE = 200;
-
 export class YouTubeApiScraperService {
 	constructor() { }
 	
