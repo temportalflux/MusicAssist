@@ -8,7 +8,7 @@ Hooks.on('renderPlaylistSoundConfig', (cfg, html, data) =>
 
 overrideFunc(PlaylistSoundConfig.prototype, '_updateObject', function(super_updateObject, evt, formData, etc)
 {
-	if (!game.user.isGM) throw "You do not have the ability to configure an AmbientSound object.";
+	if (!game.user.isGM) throw "You do not have the ability to configure an PlaylistSound object.";
 
 	if (!formData.streamed)
 	{
