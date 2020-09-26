@@ -1,0 +1,13 @@
+{
+	"music-assist.import-yt-playlist-nav-text": "Importar Lista de Reproducción de YouTube",
+	"music-assist.import-yt-playlist-notes": "Introduzca la dirección de una Lista de Reproducción de YouTube o el ID de una Lista de Reproducción y haga clic en el botón de importar para que comience el proceso.",
+	"music-assist.import-yt-playlist-btn-import": "Importar",
+	"music-assist.import-yt-playlist-btn-submit": "Guardar",
+	"music-assist.import-yt-playlist-msg-already-working": "La Lista de Reproducción se está importando. Por favor, espere",
+	"music-assist.import-yt-playlist-msg-invalid-key": "Por favor, introduzca la dirección de una Lista de Reproducción de YouTube válida (debe tener la palabra list en la cadena de consulta) o el ID de una Lista de Reproducción válida",
+	"music-assist.import-yt-playlist-msg-error": "Error al importar la Lista de Reproducción - consulte los detalles en la consola",
+	"music-assist.import-yt-playlist-msg-key-not-found": "No existe la Lista de Reproducción con la clave {playlistKey} - compruebe la dirección o el ID e inténtelo de nuevo",
+	"music-assist.import-yt-playlist-msg-imported": "La Lista de Reproducción {playlistName} ha sido importada con éxito",
+	"music-assist.import-yt-playlist-lbl-name": "Nombre de la Lista de Reproducción",
+	"music-assist.import-yt-playlist-lbl-volume": "Volumen por defecto"
+}
