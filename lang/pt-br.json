@@ -1,0 +1,13 @@
+{
+	"music-assist.import-yt-playlist-nav-text": "Importar Playlist do Youtube",
+	"music-assist.import-yt-playlist-notes": "Cole a URL ou ID da playlist abaixo e clique no botão importar ao lado para começar.",
+	"music-assist.import-yt-playlist-btn-import": "Importar",
+	"music-assist.import-yt-playlist-btn-submit": "Salvar",
+	"music-assist.import-yt-playlist-msg-already-working": "A playlist está sendo importada, por favor espere.",
+	"music-assist.import-yt-playlist-msg-invalid-key": "Por favor forneça um URL de playlist válido do Youtube (com a parte list e o código) ou um ID da playlist",
+	"music-assist.import-yt-playlist-msg-error": "Erro importando a playlist - confira o console para detalhes",
+	"music-assist.import-yt-playlist-msg-key-not-found": "A Playlist com a chave {playlistKey} não existe - confira o URL ou ID e tente novamente",
+	"music-assist.import-yt-playlist-msg-imported": "A Playlist {playlistName} foi importada com sucesso.",
+	"music-assist.import-yt-playlist-lbl-name": "Nome da playlist",
+	"music-assist.import-yt-playlist-lbl-volume": "Volume padrão"
+}
