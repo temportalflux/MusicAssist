@@ -1,6 +1,8 @@
 # MusicAssist
 ---
 
+MusicAssist has been DEPRECTAED. Go check out its successor [Bellows](https://github.com/casualchameleon/Bellows)!! 
+
 * **Author**: temportalflux (discord: temportalflux#3142)
 * **Version**: 0.1.0
 * **Foundry VTT Compatibility**: 0.5.5+ (possibly older versions)
